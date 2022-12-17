@@ -1,4 +1,5 @@
 const INITIAL_VELOCITY = .025;
+const VELOCITY_INCREASE = .00001;
 
 function randomNumberBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -49,10 +50,16 @@ export default class Ball {
     this.x += this.direction.x * this.velocity * delta;
     this.y += this.direction.y * this.velocity * delta;
 
+    //let the velocity of the ball increase
+    this.velocity += VELOCITY_INCREASE * delta;
+
     //let the ball bounce back when hit the top/bottom of the screen
     const rect = this.rect();
     if (rect.bottom >= window.innerHeight || rect.top <= 0) {
       this.direction.y *= -1;
+    }
+    if (rect.right >= window.innerWidth || rect.left <= 0) {
+      this.direction.x *= -1;
     }
   }
 }
